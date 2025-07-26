@@ -3,20 +3,9 @@
   "outputDirectory": "evchamp-frontend/build",
   "framework": "create-react-app",
   "installCommand": "cd evchamp-frontend && npm install",
-  "devCommand": "cd evchamp-frontend && npm start",
-  "builds": [
-    {
-      "src": "evchamp-frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/evchamp-frontend/build/static/$1"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
