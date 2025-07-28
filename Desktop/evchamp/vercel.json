@@ -5,7 +5,8 @@
   "installCommand": "cd evchamp-frontend && npm install",
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "/static/(.*)",
+      "dest": "/evchamp-frontend/build/static/$1"
     },
     {
       "src": "/(.*)",
