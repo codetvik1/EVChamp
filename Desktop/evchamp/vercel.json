@@ -1,16 +1,5 @@
 {
   "buildCommand": "cd evchamp-frontend && npm install && npm run build",
   "outputDirectory": "evchamp-frontend/build",
-  "framework": "create-react-app",
-  "installCommand": "cd evchamp-frontend && npm install",
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/evchamp-frontend/build/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/evchamp-frontend/build/index.html"
-    }
-  ]
+  "framework": "create-react-app"
 } 
