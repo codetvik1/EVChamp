@@ -23,11 +23,11 @@ const Overview: React.FC = () => (
         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-green-400 flex items-center justify-center shadow-lg mb-3">
           <span className="text-white text-4xl font-extrabold">Z</span>
         </div>
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-1">ZIPSURE AI</h1>
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-1">EV CHAMP</h1>
         <h2 className="text-xl font-semibold text-blue-700 mb-2">Empowering Intelligent Electric Mobility</h2>
       </div>
       <p className="text-gray-700 text-lg mb-6 text-center">
-        At Zipsure AI, we are at the forefront of transforming electric vehicle (EV) fleet management through our integrated platform that combines AI-powered software with IoT-enabled smart hardware. Our solutions are designed to make EV operations seamless, efficient, and intelligent.
+        At EV Champ, we are at the forefront of transforming electric vehicle (EV) fleet management through our integrated platform that combines AI-powered software with IoT-enabled smart hardware. Our solutions are designed to make EV operations seamless, efficient, and intelligent.
       </p>
       <div className="w-full mb-6">
         <h3 className="text-lg font-bold text-gray-800 mb-3 text-center">Key Offerings</h3>

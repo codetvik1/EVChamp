@@ -15,7 +15,7 @@ const Header: React.FC = () => (
         <a href="#testimonials" className="text-gray-600 hover:text-green-600 transition-colors">Testimonials</a>
         <a href="#faq" className="text-gray-600 hover:text-green-600 transition-colors">FAQ</a>
       </nav>
-      <a href="#quote" className="cta-gradient text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all bg-gradient-to-r from-green-500 to-green-700">
+      <a href="/buy-plans" className="cta-gradient text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all bg-gradient-to-r from-green-500 to-green-700">
         Buy Plans
       </a>
     </div>
