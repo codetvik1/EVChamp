@@ -13,7 +13,7 @@ const Footer: React.FC = () => (
         <div>
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2">
-            <li><a href="#" className="text-gray-400 hover:text-white">Home</a></li>
+            <li><a href="/" className="text-gray-400 hover:text-white">Home</a></li>
             <li><a href="#features" className="text-gray-400 hover:text-white">Features</a></li>
             <li><a href="#coverage" className="text-gray-400 hover:text-white">Coverage</a></li>
             <li><a href="#quote" className="text-gray-400 hover:text-white">Get Quote</a></li>
@@ -21,23 +21,24 @@ const Footer: React.FC = () => (
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-4">Legal</h3>
-          <ul className="space-y-2">
-            <li><a href="#" className="text-gray-400 hover:text-white">Privacy Policy</a></li>
-            <li><a href="#" className="text-gray-400 hover:text-white">Terms of Service</a></li>
-            <li><a href="#" className="text-gray-400 hover:text-white">Claim Process</a></li>
+          <ul className="space-y-2 text-sm">
+            <li><a href="/privacy" className="underline text-gray-300 hover:text-white">Privacy Policy</a></li>
+            <li><a href="/terms" className="underline text-gray-300 hover:text-white">Terms of Use</a></li>
+            <li><a href="/refund" className="underline text-gray-300 hover:text-white">Refund & Cancellation Policy</a></li>
           </ul>
         </div>
         <div>
-          <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-          <ul className="space-y-2 text-gray-400">
-            <li>Email: <a href="mailto:support@zipsure.ai" className="hover:text-white">support@zipsure.ai</a></li>
-            <li>Phone: <a href="tel:+911800123456" className="hover:text-white">1800-123-456</a></li>
-            <li>Address: 123 Electric Ave, Bangalore, India</li>
+          <h3 className="text-lg font-semibold mb-4">Company Details & Contact</h3>
+          <ul className="space-y-2 text-gray-400 text-sm">
+            <li><span className="font-semibold text-white">ZipBolt Technologies Pvt Ltd</span></li>
+            <li>MGF Metropolis Mall, MG Road,<br />Gurgaon, Haryana – 122002</li>
+            <li>Phone: <a href="tel:+918368681769" className="hover:text-white">+91 83686 81769</a></li>
+            <li>Email: <a href="mailto:contact@zipsureai.com" className="hover:text-white">contact@zipsureai.com</a></li>
           </ul>
         </div>
       </div>
       <div className="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
-        <p>&copy; 2024 ZipSure.ai. All Rights Reserved.</p>
+        <p>&copy; 2024 EVChamp. All Rights Reserved.</p>
       </div>
     </div>
   </footer>

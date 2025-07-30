@@ -10,6 +10,9 @@ import Footer from './Footer';
 import Overview from './Overview';
 import DashboardFeatures from './DashboardFeatures';
 import BuyPlans from './components/BuyPlans';
+import TermsOfUse from './components/TermsOfUse';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import RefundPolicy from './components/RefundPolicy';
 
 function HomePage() {
   return (
@@ -34,6 +37,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/buy-plans" element={<BuyPlans />} />
+          <Route path="/terms" element={<TermsOfUse />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/refund" element={<RefundPolicy />} />
         </Routes>
       </div>
     </Router>
