@@ -1,13 +1,12 @@
 import React from 'react';
+import EVChampLogo from '../assets/EVChampLogo.png';
 
 const Header: React.FC = () => (
-  <header className="bg-gradient-to-r from-yellow-200 via-green-200 to-blue-300/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+  <header className="bg-ev-gradient backdrop-blur-lg sticky top-0 z-50 shadow-sm">
     <div className="container mx-auto px-6 py-4 flex justify-between items-center">
       <div className="flex items-center space-x-2">
-        <svg className="h-8 w-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286Z" />
-        </svg>
-        <span className="text-2xl font-bold text-gray-800">EV Champ</span>
+        <img src={EVChampLogo} alt="EV Champ Logo" className="h-8 w-8" />
+        <span className="text-2xl font-bold text-ev-pearl">EV Champ</span>
       </div>
       <nav className="hidden md:flex items-center space-x-8">
         <a href="#features" className="text-gray-600 hover:text-green-600 transition-colors">Features</a>

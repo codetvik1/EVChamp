@@ -6,7 +6,7 @@ const Hero: React.FC = () => (
       <div className="text-center md:text-left">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
           India's First & Only <br className="hidden md:block" />
-          <span className="text-green-600">EV-Specific Insurance</span>
+          <span className="text-green-600">EV-Specific Coverage</span>
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-xl mx-auto md:mx-0">
           Protect your Electric Vehicle with a comprehensive insurance plan that covers everything from the battery to the charger. Drive with peace of mind.

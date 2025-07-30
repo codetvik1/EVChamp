@@ -16,12 +16,11 @@ import RefundPolicy from './components/RefundPolicy';
 
 function HomePage() {
   return (
-    <div>
+    <div className="bg-gradient-to-br from-yellow-200 via-green-200 to-blue-300 min-h-screen w-full">
+      <Hero />
       <Overview />
       <DashboardFeatures />
-      <Hero />
       <Features />
-      <Coverage />
       <HowItWorks />
       <Testimonials />
       <Footer />

@@ -21,13 +21,13 @@ const Overview: React.FC = () => (
     <div className="relative z-10 max-w-2xl w-full mx-auto bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center border border-blue-100">
       <div className="mb-6 flex flex-col items-center">
         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-green-400 flex items-center justify-center shadow-lg mb-3">
-          <span className="text-white text-4xl font-extrabold">Z</span>
+          <span className="text-white text-4xl font-extrabold">E</span>
         </div>
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-1">EV CHAMP</h1>
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-1">EVCHAMP</h1>
         <h2 className="text-xl font-semibold text-blue-700 mb-2">Empowering Intelligent Electric Mobility</h2>
       </div>
       <p className="text-gray-700 text-lg mb-6 text-center">
-        At EV Champ, we are at the forefront of transforming electric vehicle (EV) fleet management through our integrated platform that combines AI-powered software with IoT-enabled smart hardware. Our solutions are designed to make EV operations seamless, efficient, and intelligent.
+        At EVChamp, we are at the forefront of transforming electric vehicle (EV) fleet management through our integrated platform that combines AI-powered software with IoT-enabled smart hardware. Our solutions are designed to make EV operations seamless, efficient, and intelligent.
       </p>
       <div className="w-full mb-6">
         <h3 className="text-lg font-bold text-gray-800 mb-3 text-center">Key Offerings</h3>
@@ -48,7 +48,7 @@ const Overview: React.FC = () => (
       </div>
       <div className="flex flex-col items-center mt-4">
         <div className="w-28 h-28 bg-gradient-to-br from-gray-200 to-blue-100 border-4 border-dashed border-blue-300 flex items-center justify-center rounded-xl shadow-inner">
-          <span className="text-blue-400 font-bold text-lg">QR CODE</span>
+          <span className="text-blue-400 font-bold text-lg">[Insert QR Code to download the app]</span>
         </div>
         <span className="text-xs text-gray-400 mt-1">Scan to download the app</span>
       </div>
