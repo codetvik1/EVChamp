@@ -3,19 +3,19 @@ import React from 'react';
 
 const testimonials = [
   {
-    quote: "Comprehensive coverage and the battery protection is a huge plus. I would definitely recommend them to other EV owners.",
+    quote: "The AI-powered app has transformed how I manage my EV. Real-time battery monitoring and predictive maintenance alerts give me complete peace of mind.",
     name: "Rohan Sharma",
     role: "Tesla Model 3 Owner",
     img: "https://placehold.co/48x48/22c55e/ffffff?text=RS"
   },
   {
-    quote: "The claims process was very smooth and hassle-free. The team was responsive and helpful. Truly a seamless experience!",
+    quote: "The IoT device installation was super easy and the dashboard provides amazing insights about my vehicle's health. Love the smart features!",
     name: "Priya Patel",
     role: "Tata Nexon EV Owner",
     img: "https://placehold.co/48x48/22c55e/ffffff?text=PP"
   },
   {
-    quote: "Finally, an insurance company that understands EVs! The 24/7 roadside assistance with charging support is a game-changer.",
+    quote: "The smart buyback and warranty tracking features are incredible. The app helps me make informed decisions about my EV investment.",
     name: "Ankit Kumar",
     role: "Hyundai Kona Owner",
     img: "https://placehold.co/48x48/22c55e/ffffff?text=AK"

@@ -24,11 +24,20 @@ const Overview: React.FC = () => (
           <span className="text-white text-4xl font-extrabold">E</span>
         </div>
         <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-1">EVCHAMP</h1>
-        <h2 className="text-xl font-semibold text-blue-700 mb-2">Empowering Intelligent Electric Mobility</h2>
+        <h2 className="text-xl font-semibold bg-gradient-to-r from-blue-500 to-green-400 text-transparent bg-clip-text mb-2">Empowering Intelligent Electric Mobility</h2>
       </div>
       <p className="text-gray-700 text-lg mb-6 text-center">
         At EVChamp, we are at the forefront of transforming electric vehicle (EV) fleet management through our integrated platform that combines AI-powered software with IoT-enabled smart hardware. Our solutions are designed to make EV operations seamless, efficient, and intelligent.
       </p>
+      <div className="flex flex-col items-center mb-4">
+        <span className="inline-block bg-gradient-to-r from-blue-500 to-green-400 text-white px-4 py-1 rounded-full text-sm font-semibold shadow">Available on Android, iOS & Web</span>
+      </div>
+      <div className="flex flex-col items-center mb-6">
+        <div className="w-28 h-28 bg-gradient-to-br from-gray-200 to-blue-100 border-4 border-dashed border-blue-300 flex items-center justify-center rounded-xl shadow-inner">
+          <span className="text-blue-400 font-bold text-lg">[Insert QR Code to download the app]</span>
+        </div>
+        <span className="text-xs text-gray-400 mt-1">Scan to download the app</span>
+      </div>
       <div className="w-full mb-6">
         <h3 className="text-lg font-bold text-gray-800 mb-3 text-center">Key Offerings</h3>
         <ul className="space-y-3">
@@ -42,15 +51,6 @@ const Overview: React.FC = () => (
             );
           })}
         </ul>
-      </div>
-      <div className="flex flex-col items-center mb-4">
-        <span className="inline-block bg-gradient-to-r from-blue-500 to-green-400 text-white px-4 py-1 rounded-full text-sm font-semibold shadow">Available on Android, iOS & Web</span>
-      </div>
-      <div className="flex flex-col items-center mt-4">
-        <div className="w-28 h-28 bg-gradient-to-br from-gray-200 to-blue-100 border-4 border-dashed border-blue-300 flex items-center justify-center rounded-xl shadow-inner">
-          <span className="text-blue-400 font-bold text-lg">[Insert QR Code to download the app]</span>
-        </div>
-        <span className="text-xs text-gray-400 mt-1">Scan to download the app</span>
       </div>
     </div>
   </section>

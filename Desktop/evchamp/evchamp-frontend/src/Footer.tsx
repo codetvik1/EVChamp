@@ -1,13 +1,25 @@
 // src/components/Footer.tsx
 import React from 'react';
+import footerBanner from './assets/footer_banner.jpeg';
 
 const Footer: React.FC = () => (
   <footer className="bg-gradient-to-tr from-blue-900 via-green-900 to-yellow-700 text-white">
+    {/* Companies Banner Section */}
+    <div className="bg-white py-8">
+      <div className="container mx-auto px-6">
+        <img 
+          src={footerBanner} 
+          alt="Our Trusted Partners" 
+          className="w-full h-auto max-w-6xl mx-auto object-contain"
+        />
+      </div>
+    </div>
+
     <div className="container mx-auto px-6 py-12">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-xl font-bold mb-4">ZipSure.ai</h3>
-          <p className="text-gray-400">India's leading insure-tech platform for Electric Vehicles.</p>
+          <h3 className="text-xl font-bold mb-4">© EVChamp</h3>
+          <p className="text-gray-400">India's leading AI & IoT-driven EV fleet management platform.</p>
           {/* Social icons can be added here */}
         </div>
         <div>

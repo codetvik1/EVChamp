@@ -5,7 +5,7 @@ import img2 from './assets/94ce24dbb3ddc2052b8cac541121ded938aba1a9.png';
 import img3 from './assets/9569dab8d8880a11d76d38aa48cddabab7980ad6.png';
 
 const HowItWorks: React.FC = () => (
-  <section className="py-20 bg-white">
+  <section id="how-it-works" className="py-20 bg-white">
     <div className="container mx-auto px-6">
       {/* Main Heading Section */}
       <div className="text-center mb-16">

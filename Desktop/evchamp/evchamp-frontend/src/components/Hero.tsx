@@ -1,4 +1,5 @@
 import React from 'react';
+import headerImg from '../assets/header.jpg';
 
 const Hero: React.FC = () => (
   <section className="pt-16 pb-20 bg-gradient-to-tr from-yellow-200 via-green-200 to-blue-300 transition-colors duration-1000">
@@ -32,7 +33,7 @@ const Hero: React.FC = () => (
         </div>
       </div>
       <div>
-        <img src="https://placehold.co/600x400/34d399/ffffff?text=EV+Fleet+Management" alt="EV Fleet Management Illustration" className="rounded-lg shadow-2xl w-full h-auto transform transition-transform duration-700 hover:scale-105 hover:shadow-3xl" />
+        <img src={headerImg} alt="EV Fleet Management Illustration" className="rounded-lg shadow-2xl w-full h-auto transform transition-transform duration-700 hover:scale-105 hover:shadow-3xl" />
       </div>
     </div>
   </section>
