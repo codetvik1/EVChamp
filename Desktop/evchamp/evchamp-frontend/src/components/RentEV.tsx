@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import { FaCar, FaBatteryFull, FaRoute, FaClock, FaUsers, FaShieldAlt, FaCheckCircle, FaArrowLeft } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { useNavigate } from 'react-router-dom';
+// Add imports for local images
+import nexonImg from '../assets/tata-nexon.jpg';
+import mgzsevImg from '../assets/mgzsev.jpg';
+import konaImg from '../assets/honda-kona-ev.jpg';
+import xuv400Img from '../assets/xuv400.jpg';
+import tiagoevImg from '../assets/tiagoev.jpg';
+import cometevImg from '../assets/cometev.jpg';
+import punchImg from '../assets/punch-ev.jpg';
+import citroenImg from '../assets/citroen.jpg';
+import e20nxtImg from '../assets/e20-NXT.jpg';
 
 interface EVCard {
   id: number;
@@ -23,7 +33,7 @@ const evCars: EVCard[] = [
     id: 1,
     name: "Nexon EV",
     brand: "Tata",
-    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop&crop=center",
+    image: nexonImg,
     range: "437 km",
     battery: "40.5 kWh",
     seats: 5,
@@ -37,7 +47,7 @@ const evCars: EVCard[] = [
     id: 2,
     name: "ZSEV",
     brand: "MG",
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&h=300&fit=crop&crop=center",
+    image: mgzsevImg,
     range: "461 km",
     battery: "50.3 kWh",
     seats: 5,
@@ -51,7 +61,7 @@ const evCars: EVCard[] = [
     id: 3,
     name: "Kona Electric",
     brand: "Hyundai",
-    image: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=300&fit=crop&crop=center",
+    image: konaImg,
     range: "484 km",
     battery: "39.2 kWh",
     seats: 5,
@@ -65,7 +75,7 @@ const evCars: EVCard[] = [
     id: 4,
     name: "XUV400",
     brand: "Mahindra",
-    image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&h=300&fit=crop&crop=center",
+    image: xuv400Img,
     range: "456 km",
     battery: "39.4 kWh",
     seats: 5,
@@ -79,7 +89,7 @@ const evCars: EVCard[] = [
     id: 5,
     name: "Tiago EV",
     brand: "Tata",
-    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop&crop=center",
+    image: tiagoevImg,
     range: "315 km",
     battery: "24 kWh",
     seats: 5,
@@ -93,7 +103,7 @@ const evCars: EVCard[] = [
     id: 6,
     name: "Comet EV",
     brand: "Tata",
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&h=300&fit=crop&crop=center",
+    image: cometevImg,
     range: "137 km",
     battery: "17.3 kWh",
     seats: 2,
@@ -107,7 +117,7 @@ const evCars: EVCard[] = [
     id: 7,
     name: "Punch EV",
     brand: "Tata",
-    image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&h=300&fit=crop&crop=center",
+    image: punchImg,
     range: "421 km",
     battery: "35 kWh",
     seats: 5,
@@ -121,7 +131,7 @@ const evCars: EVCard[] = [
     id: 8,
     name: "eC3",
     brand: "Citroen",
-    image: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=300&fit=crop&crop=center",
+    image: citroenImg,
     range: "320 km",
     battery: "29.2 kWh",
     seats: 5,
@@ -135,7 +145,7 @@ const evCars: EVCard[] = [
     id: 9,
     name: "e20 NXT",
     brand: "Mahindra",
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&h=300&fit=crop&crop=center",
+    image: e20nxtImg,
     range: "140 km",
     battery: "17.3 kWh",
     seats: 4,
