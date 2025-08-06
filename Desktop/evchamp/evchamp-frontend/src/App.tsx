@@ -14,6 +14,7 @@ import RentEV from './components/RentEV';
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import RefundPolicy from './components/RefundPolicy';
+import { SignIn, SignUp, UserProfile, RedirectToSignIn, useUser } from '@clerk/clerk-react';
 
 function HomePage() {
   return (
@@ -29,6 +30,14 @@ function HomePage() {
   );
 }
 
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { isSignedIn } = useUser();
+  if (!isSignedIn) {
+    return <RedirectToSignIn />;
+  }
+  return <>{children}</>;
+}
+
 function App() {
   return (
     <Router>
@@ -36,8 +45,19 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/buy-plans" element={<BuyPlans />} />
-          <Route path="/rent-ev" element={<RentEV />} />
+          <Route path="/sign-in" element={<SignIn routing="path" path="/sign-in" />} />
+          <Route path="/sign-up" element={<SignUp routing="path" path="/sign-up" />} />
+          <Route path="/user" element={<UserProfile routing="path" path="/user" />} />
+          <Route path="/buy-plans" element={
+            <ProtectedRoute>
+              <BuyPlans />
+            </ProtectedRoute>
+          } />
+          <Route path="/rent-ev" element={
+            <ProtectedRoute>
+              <RentEV />
+            </ProtectedRoute>
+          } />
           <Route path="/terms" element={<TermsOfUse />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/refund" element={<RefundPolicy />} />
