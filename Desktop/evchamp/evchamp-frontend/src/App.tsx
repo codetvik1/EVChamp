@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -15,7 +15,6 @@ import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import RefundPolicy from './components/RefundPolicy';
 import { SignIn, SignUp, UserProfile, RedirectToSignIn, useUser } from '@clerk/clerk-react';
-import * as Fa from 'react-icons/fa';
 
 function HomePage() {
   return (
@@ -31,47 +30,46 @@ function HomePage() {
   );
 }
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isSignedIn } = useUser();
-  if (!isSignedIn) {
-    return <RedirectToSignIn />;
-  }
-  return <>{children}</>;
-}
-
-function UserProfileWrapper() {
-  const navigate = useNavigate();
-
+function UserSettingsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Back Button */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-green-200 to-blue-300">
+      <div className="container mx-auto px-6 py-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Back Button */}
+          <div className="mb-6">
             <button
-              onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors font-medium"
+              onClick={() => window.history.back()}
+              className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-gray-700 px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-200 shadow-lg"
             >
-              {React.createElement(Fa.FaArrowLeft as any, { size: 16 })}
-              <span>Back to Home</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="font-semibold">Back</span>
             </button>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">EV Champ Account Settings</span>
-            </div>
           </div>
-        </div>
-      </div>
-
-      {/* User Profile Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 min-h-[calc(100vh-200px)] overflow-hidden">
-          <div className="h-full w-full">
+          
+          {/* Page Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Account Settings</h1>
+            <p className="text-gray-600">Manage your profile, security, and preferences</p>
+          </div>
+          
+          {/* User Profile Component */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8">
             <UserProfile routing="path" path="/user" />
           </div>
         </div>
       </div>
     </div>
   );
+}
+
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { isSignedIn } = useUser();
+  if (!isSignedIn) {
+    return <RedirectToSignIn />;
+  }
+  return <>{children}</>;
 }
 
 function App() {
@@ -83,7 +81,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/sign-in" element={<SignIn routing="path" path="/sign-in" />} />
           <Route path="/sign-up" element={<SignUp routing="path" path="/sign-up" />} />
-          <Route path="/user" element={<UserProfileWrapper />} />
+          <Route path="/user" element={<UserSettingsPage />} />
           <Route path="/buy-plans" element={
             <ProtectedRoute>
               <BuyPlans />
