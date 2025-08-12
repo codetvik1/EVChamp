@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
+import razorpayService from '../services/razorpayService';
 
 interface Plan {
   id: number;
@@ -103,79 +105,86 @@ const softwarePlans: Plan[] = [
   {
     id: 5,
     name: 'Dashboard ENTERPRISE',
-    price: 4500,
+    price: 5000,
     duration: 'Annual (per vehicle)',
     features: [
       'All STANDARD features',
-      'Advanced Telematics & Forecasting',
-      'Custom APIs',
-      'Multi-Vehicle Control',
-      'Integration with BuyBack & Warranty Extension Plans',
+      'Advanced Analytics & AI Insights',
+      'Custom Reports & Integrations',
+      'Priority Support',
     ],
-    idealFor: 'Fleet Managers, OEMs, Leasing Companies, Insurers',
-    type: 'software',
-  },
-  {
-    id: 6,
-    name: 'EVCHAMP TOTAL',
-    price: 5999,
-    duration: 'Annual (per vehicle)',
-    features: [
-      'App PRO + Dashboard ENTERPRISE',
-      'Seamless, end-to-end fleet and vehicle management',
-    ],
-    idealFor: 'Comprehensive Solution Seekers',
+    idealFor: 'Large Enterprises, OEMs, Insurance Companies',
     type: 'software',
   },
 ];
 
 const BuyPlans: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedHardware, setSelectedHardware] = useState<Plan | null>(null);
-  const [selectedSoftware, setSelectedSoftware] = useState<Plan[]>([]);
+  const { user } = useUser();
+  const [selectedPlans, setSelectedPlans] = useState<Plan[]>([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const orderSectionRef = useRef<HTMLDivElement>(null);
   const detailsSectionRef = useRef<HTMLDivElement>(null);
-  const hardwareSectionRef = useRef<HTMLDivElement>(null);
-  const softwareSectionRef = useRef<HTMLDivElement>(null);
-  const [showDetails, setShowDetails] = useState(false);
 
-  // Scroll to software plans after hardware selection
   const handleHardwareSelect = (plan: Plan) => {
-    setSelectedHardware(plan.id === selectedHardware?.id ? null : plan);
-    setShowDetails(false);
-    setTimeout(() => {
-      if (plan.id !== selectedHardware?.id) {
-        softwareSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 200);
+    const existingHardware = selectedPlans.find(p => p.type === 'hardware');
+    if (existingHardware) {
+      setSelectedPlans(selectedPlans.filter(p => p.type !== 'hardware').concat(plan));
+    } else {
+      setSelectedPlans([...selectedPlans, plan]);
+    }
   };
 
-  // Scroll to order/details after software selection
   const handleSoftwareToggle = (plan: Plan) => {
-    let newSelected: Plan[];
-    if (selectedSoftware.find((p) => p.id === plan.id)) {
-      newSelected = selectedSoftware.filter((p) => p.id !== plan.id);
+    const isSelected = selectedPlans.some(p => p.id === plan.id && p.type === plan.type);
+    if (isSelected) {
+      setSelectedPlans(selectedPlans.filter(p => !(p.id === plan.id && p.type === plan.type)));
     } else {
-      newSelected = [...selectedSoftware, plan];
+      setSelectedPlans([...selectedPlans, plan]);
     }
-    setSelectedSoftware(newSelected);
-    setShowDetails(false);
-    setTimeout(() => {
-      if (!selectedSoftware.find((p) => p.id === plan.id)) {
-        orderSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 200);
   };
+
+  const totalPrice = selectedPlans.reduce((sum, plan) => sum + plan.price, 0);
 
   const handleOrderClick = () => {
     setShowDetails(true);
     setTimeout(() => {
-      detailsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 200);
+      detailsSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
-  const selectedPlans = [selectedHardware, ...selectedSoftware].filter(Boolean) as Plan[];
-  const totalPrice = selectedPlans.reduce((sum, plan) => sum + plan.price, 0);
+  const handlePayment = async () => {
+    if (!user) {
+      alert('Please sign in to proceed with payment.');
+      return;
+    }
+
+    if (selectedPlans.length === 0) {
+      alert('Please select at least one plan.');
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      const planNames = selectedPlans.map(plan => plan.name).join(', ');
+      const description = `EVChamp Plans: ${planNames}`;
+      
+      await razorpayService.initializePayment(
+        totalPrice,
+        'EVChamp Plans Purchase',
+        description,
+        user.primaryEmailAddress?.emailAddress || undefined,
+        user.firstName || user.username || undefined
+      );
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Payment failed. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12">
@@ -196,17 +205,17 @@ const BuyPlans: React.FC = () => {
         </div>
 
         {/* Hardware Plans */}
-        <div ref={hardwareSectionRef} className="mb-16">
+        <div className="mb-16">
           <h2 className="text-3xl font-semibold text-gray-800 mb-8 text-center">IoT Hardware Plans</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {hardwarePlans.map((plan) => (
               <div
                 key={plan.id}
-                className={`relative bg-white rounded-2xl shadow-lg p-8 border-2 transition-all duration-200 cursor-pointer hover:scale-105 hover:shadow-2xl ${selectedHardware?.id === plan.id ? 'border-green-500 ring-4 ring-green-200' : 'border-gray-100'}`}
+                className={`relative bg-white rounded-2xl shadow-lg p-8 border-2 transition-all duration-200 cursor-pointer hover:scale-105 hover:shadow-2xl ${selectedPlans.some(p => p.id === plan.id && p.type === 'hardware') ? 'border-green-500 ring-4 ring-green-200' : 'border-gray-100'}`}
                 onClick={() => handleHardwareSelect(plan)}
               >
                 <div className="absolute top-4 right-4">
-                  {selectedHardware?.id === plan.id && (
+                  {selectedPlans.some(p => p.id === plan.id && p.type === 'hardware') && (
                     <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">Selected</span>
                   )}
                 </div>
@@ -223,10 +232,10 @@ const BuyPlans: React.FC = () => {
                   ))}
                 </ul>
                 <button
-                  className={`w-full py-3 rounded-lg font-semibold mt-2 transition-all duration-200 bg-gradient-to-r from-green-500 to-green-700 text-white hover:from-green-600 hover:to-green-800 ${selectedHardware?.id === plan.id ? 'opacity-80' : ''}`}
+                  className={`w-full py-3 rounded-lg font-semibold mt-2 transition-all duration-200 bg-gradient-to-r from-green-500 to-green-700 text-white hover:from-green-600 hover:to-green-800 ${selectedPlans.some(p => p.id === plan.id && p.type === 'hardware') ? 'opacity-80' : ''}`}
                   onClick={(e) => { e.stopPropagation(); handleHardwareSelect(plan); }}
                 >
-                  {selectedHardware?.id === plan.id ? 'Deselect' : 'Select Hardware Plan'}
+                  {selectedPlans.some(p => p.id === plan.id && p.type === 'hardware') ? 'Deselect' : 'Select Hardware Plan'}
                 </button>
               </div>
             ))}
@@ -234,19 +243,19 @@ const BuyPlans: React.FC = () => {
         </div>
 
         {/* Software Plans */}
-        <div ref={softwareSectionRef} className="mb-16">
+        <div className="mb-16">
           <h2 className="text-3xl font-semibold text-gray-800 mb-8 text-center">Software Subscription Plans</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {softwarePlans.map((plan) => {
-              const selected = !!selectedSoftware.find((p) => p.id === plan.id);
+              const isSelected = selectedPlans.some(p => p.id === plan.id && p.type === plan.type);
               return (
                 <div
                   key={plan.id}
-                  className={`relative bg-white rounded-2xl shadow-lg p-8 border-2 transition-all duration-200 cursor-pointer hover:scale-105 hover:shadow-2xl ${selected ? 'border-blue-500 ring-4 ring-blue-200' : 'border-gray-100'}`}
+                  className={`relative bg-white rounded-2xl shadow-lg p-8 border-2 transition-all duration-200 cursor-pointer hover:scale-105 hover:shadow-2xl ${isSelected ? 'border-blue-500 ring-4 ring-blue-200' : 'border-gray-100'}`}
                   onClick={() => handleSoftwareToggle(plan)}
                 >
                   <div className="absolute top-4 right-4">
-                    {selected && (
+                    {isSelected && (
                       <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">Selected</span>
                     )}
                   </div>
@@ -263,10 +272,10 @@ const BuyPlans: React.FC = () => {
                     ))}
                   </ul>
                   <button
-                    className={`w-full py-3 rounded-lg font-semibold mt-2 transition-all duration-200 bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-600 hover:to-blue-800 ${selected ? 'opacity-80' : ''}`}
+                    className={`w-full py-3 rounded-lg font-semibold mt-2 transition-all duration-200 bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-600 hover:to-blue-800 ${isSelected ? 'opacity-80' : ''}`}
                     onClick={(e) => { e.stopPropagation(); handleSoftwareToggle(plan); }}
                   >
-                    {selected ? 'Deselect' : 'Select Software Plan'}
+                    {isSelected ? 'Deselect' : 'Select Software Plan'}
                   </button>
                 </div>
               );
@@ -335,7 +344,9 @@ const BuyPlans: React.FC = () => {
                 <label className="block text-gray-700 font-medium mb-2">Company (optional)</label>
                 <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Enter your company name" />
               </div>
-              <button type="button" className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-green-700 transition-colors transform hover:scale-105">Place Order</button>
+              <button type="button" className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-green-700 transition-colors transform hover:scale-105" onClick={handlePayment} disabled={isProcessing}>
+                {isProcessing ? 'Processing Payment...' : 'Place Order'}
+              </button>
             </form>
           </div>
         )}

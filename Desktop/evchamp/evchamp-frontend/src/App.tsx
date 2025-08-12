@@ -14,6 +14,7 @@ import RentEV from './components/RentEV';
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import RefundPolicy from './components/RefundPolicy';
+import PaymentSuccess from './components/PaymentSuccess';
 import { SignIn, SignUp, UserProfile, RedirectToSignIn, useUser } from '@clerk/clerk-react';
 
 function HomePage() {
@@ -82,6 +83,7 @@ function App() {
           <Route path="/sign-in" element={<SignIn routing="path" path="/sign-in" />} />
           <Route path="/sign-up" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/user" element={<UserSettingsPage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/buy-plans" element={
             <ProtectedRoute>
               <BuyPlans />

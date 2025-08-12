@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaCar, FaBatteryFull, FaRoute, FaClock, FaUsers, FaShieldAlt, FaCheckCircle, FaArrowLeft } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
+import razorpayService from '../services/razorpayService';
 // Add imports for local images
 import nexonImg from '../assets/tata-nexon.jpg';
 import mgzsevImg from '../assets/mgzsev.jpg';
@@ -104,13 +106,13 @@ const evCars: EVCard[] = [
     name: "Comet EV",
     brand: "Tata",
     image: cometevImg,
-    range: "137 km",
-    battery: "17.3 kWh",
+    range: "150 km",
+    battery: "17.5 kWh",
     seats: 2,
     dailyRate: 1200,
     weeklyRate: 7200,
     monthlyRate: 28000,
-    features: ["Compact Design", "Easy Parking", "City Friendly", "Low Maintenance"],
+    features: ["Compact Design", "Easy Parking", "City Commute", "Low Cost"],
     available: true
   },
   {
@@ -124,7 +126,7 @@ const evCars: EVCard[] = [
     dailyRate: 2000,
     weeklyRate: 12000,
     monthlyRate: 45000,
-    features: ["SUV Design", "High Ground Clearance", "Connected Car", "Safety Features"],
+    features: ["SUV Design", "High Ground Clearance", "Safety Features", "Connected Car"],
     available: true
   },
   {
@@ -135,10 +137,10 @@ const evCars: EVCard[] = [
     range: "320 km",
     battery: "29.2 kWh",
     seats: 5,
-    dailyRate: 1800,
-    weeklyRate: 10800,
+    dailyRate: 1900,
+    weeklyRate: 11400,
     monthlyRate: 42000,
-    features: ["French Design", "Comfortable Interior", "Connected Features", "Safety Tech"],
+    features: ["French Design", "Comfort Features", "Safety Tech", "Connected Services"],
     available: true
   },
   {
@@ -147,21 +149,23 @@ const evCars: EVCard[] = [
     brand: "Mahindra",
     image: e20nxtImg,
     range: "140 km",
-    battery: "17.3 kWh",
+    battery: "15.9 kWh",
     seats: 4,
-    dailyRate: 1000,
-    weeklyRate: 6000,
+    dailyRate: 1100,
+    weeklyRate: 6600,
     monthlyRate: 25000,
-    features: ["Compact SUV", "City Friendly", "Easy to Drive", "Affordable"],
+    features: ["Compact SUV", "Easy Driving", "City Friendly", "Low Maintenance"],
     available: true
   }
 ];
 
 const RentEV: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
   const [selectedPeriod, setSelectedPeriod] = useState<'daily' | 'weekly' | 'monthly'>('daily');
   const [selectedCar, setSelectedCar] = useState<EVCard | null>(null);
-  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [bookingDetails, setBookingDetails] = useState({
     name: '',
     email: '',
@@ -174,25 +178,66 @@ const RentEV: React.FC = () => {
     idProof: ''
   });
 
+  // Ref to scroll to booking form when a car is selected
+  const bookingFormRef = useRef<HTMLDivElement | null>(null);
+
+  // When a car is selected and the modal opens, scroll to the booking form
+  useEffect(() => {
+    if (showBookingModal && selectedCar) {
+      requestAnimationFrame(() => {
+        bookingFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }, [showBookingModal, selectedCar]);
+
   const getRate = (car: EVCard) => {
     switch (selectedPeriod) {
-      case 'daily': return car.dailyRate;
-      case 'weekly': return car.weeklyRate;
-      case 'monthly': return car.monthlyRate;
-      default: return car.dailyRate;
+      case 'daily':
+        return car.dailyRate;
+      case 'weekly':
+        return car.weeklyRate;
+      case 'monthly':
+        return car.monthlyRate;
+      default:
+        return car.dailyRate;
     }
   };
 
   const handleBookNow = (car: EVCard) => {
+    if (!user) {
+      alert('Please sign in to rent an EV.');
+      return;
+    }
     setSelectedCar(car);
-    setShowBookingForm(true);
-    // Scroll to booking form
-    setTimeout(() => {
-      document.getElementById('booking-form')?.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }, 100);
+    setShowBookingModal(true);
+  };
+
+  const handlePayment = async () => {
+    if (!selectedCar || !user) {
+      alert('Please select a car and sign in to proceed.');
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      const amount = getRate(selectedCar);
+      const periodText = selectedPeriod === 'daily' ? 'Daily' : selectedPeriod === 'weekly' ? 'Weekly' : 'Monthly';
+      const description = `${selectedCar.brand} ${selectedCar.name} - ${periodText} Rental`;
+      
+      await razorpayService.initializePayment(
+        amount,
+        'EVChamp EV Rental',
+        description,
+        user.primaryEmailAddress?.emailAddress || undefined,
+        user.firstName || user.username || undefined
+      );
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Payment failed. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -269,7 +314,11 @@ const RentEV: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {evCars.map((car) => (
-              <div key={car.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div
+                key={car.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+                onClick={() => handleBookNow(car)}
+              >
                 <div className="relative">
                   <img 
                     src={car.image} 
@@ -330,7 +379,7 @@ const RentEV: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={() => handleBookNow(car)}
+                    onClick={(e) => { e.stopPropagation(); handleBookNow(car); }}
                     disabled={!car.available}
                     className={`w-full py-3 px-4 rounded-lg font-semibold transition-all ${
                       car.available
@@ -348,8 +397,8 @@ const RentEV: React.FC = () => {
       </section>
 
       {/* Booking Form Section */}
-      {showBookingForm && selectedCar && (
-        <section id="booking-form" className="py-16 bg-white">
+      {showBookingModal && selectedCar && (
+        <section id="booking-form" ref={bookingFormRef} className="py-16 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center mb-8">Book Your EV</h2>
@@ -497,7 +546,7 @@ const RentEV: React.FC = () => {
       )}
 
       {/* Payment Section */}
-      {showBookingForm && selectedCar && (
+      {showBookingModal && selectedCar && (
         <section id="payment-section" className="py-16 bg-gray-50">
           <div className="container mx-auto px-6">
             <div className="max-w-2xl mx-auto">
@@ -532,20 +581,18 @@ const RentEV: React.FC = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <button className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all">
-                    Pay with UPI
-                  </button>
-                  <button className="w-full bg-green-600 text-white py-4 rounded-lg font-semibold hover:bg-green-700 transition-all">
-                    Pay with Card
-                  </button>
-                  <button className="w-full bg-orange-600 text-white py-4 rounded-lg font-semibold hover:bg-orange-700 transition-all">
-                    Pay with Net Banking
+                  <button
+                    className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition-all"
+                    onClick={handlePayment}
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? 'Processing...' : 'Place Order'}
                   </button>
                 </div>
 
                 <div className="mt-6 text-center">
                   <button
-                    onClick={() => setShowBookingForm(false)}
+                    onClick={() => setShowBookingModal(false)}
                     className="text-gray-500 hover:text-gray-700 underline"
                   >
                     Cancel Booking
