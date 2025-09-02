@@ -16,6 +16,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import RefundPolicy from './components/RefundPolicy';
 import PaymentSuccess from './components/PaymentSuccess';
 import { SignIn, SignUp, UserProfile, RedirectToSignIn, useUser } from '@clerk/clerk-react';
+import Franchise from './components/Franchise';
 
 function HomePage() {
   return (
@@ -97,6 +98,7 @@ function App() {
           <Route path="/terms" element={<TermsOfUse />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/refund" element={<RefundPolicy />} />
+          <Route path="/franchise" element={<Franchise />} />
         </Routes>
       </div>
     </Router>

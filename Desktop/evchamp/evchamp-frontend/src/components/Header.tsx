@@ -51,11 +51,26 @@ const Header: React.FC = () => {
           </button>
         </nav>
         <div className="flex items-center space-x-4">
-          <a href="/rent-ev" className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
+          <a
+            id="rent-ev-btn"
+            href="/rent-ev"
+            className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
+          >
             Rent EV
           </a>
-          <a href="/buy-plans" className="cta-gradient text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all bg-gradient-to-r from-green-500 to-green-700">
+          <a
+            id="buy-plans-btn"
+            href="/buy-plans"
+            className="cta-gradient text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all bg-gradient-to-r from-green-500 to-green-700"
+          >
             Buy Plans
+          </a>
+          <a
+            id="franchise-btn"
+            href="/franchise"
+            className="cta-gradient text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all bg-gradient-to-r from-yellow-400 to-yellow-600"
+          >
+            Franchise
           </a>
           
           {/* Account Management Button */}
@@ -127,4 +142,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header; 
+export default Header;
