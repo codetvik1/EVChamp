@@ -4,16 +4,8 @@ import footerBanner from './assets/footer_banner.jpeg';
 
 const Footer: React.FC = () => (
   <footer className="bg-gradient-to-tr from-blue-900 via-green-900 to-yellow-700 text-white">
-    {/* Companies Banner Section */}
-    <div className="bg-white py-8">
-      <div className="container mx-auto px-6">
-        <img 
-          src={footerBanner} 
-          alt="Our Trusted Partners" 
-          className="w-full h-auto max-w-6xl mx-auto object-contain"
-        />
-      </div>
-    </div>
+
+
 
     <div className="container mx-auto px-6 py-12">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

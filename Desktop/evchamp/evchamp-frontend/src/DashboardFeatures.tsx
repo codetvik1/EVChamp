@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaHeartbeat, FaBatteryFull, FaRoute, FaShieldAlt, FaHistory, FaUserCheck, FaBell } from 'react-icons/fa';
-import mockupImg from './assets/mockuo.png';
 
 const features = [
   { icon: FaHeartbeat, color: 'text-red-500', title: 'Real-Time Vehicle Health Monitoring' },
@@ -14,10 +13,9 @@ const features = [
 
 const DashboardFeatures: React.FC = () => (
   <section className="py-0 bg-white">
-    <div className="w-full flex justify-center items-center">
-      <img src={mockupImg} alt="EV Champ Dashboard Screenshot" className="w-full h-auto object-contain m-0 p-0 border-none shadow-none bg-transparent scale-75" />
-    </div>
+    {/* Removed mockup image */}
+    {/* You can add feature cards or content here if needed */}
   </section>
 );
 
-export default DashboardFeatures; 
+export default DashboardFeatures;
