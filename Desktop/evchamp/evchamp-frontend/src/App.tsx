@@ -17,6 +17,7 @@ import RefundPolicy from './components/RefundPolicy';
 import PaymentSuccess from './components/PaymentSuccess';
 import { SignIn, SignUp, UserProfile, RedirectToSignIn, useUser } from '@clerk/clerk-react';
 import Franchise from './components/Franchise';
+import BuyUsedEV from './components/BuyUsedEV'; // Import the new component
 
 // Add this import for the banner image
 import BannerLogos from './assets/footer_banner.jpeg'; // Update the path if needed
@@ -36,9 +37,9 @@ function HomePage() {
         />
       </div>
       {/* Franchise Highlight Section */}
-      <div className="w-full flex flex-col items-center py-12 bg-white border-t border-b border-gray-100">
-        <h2 className="text-2xl md:text-3xl font-bold text-green-700 mb-3">Become an EVChamp Franchise Partner</h2>
-        <p className="max-w-2xl text-center text-gray-700 mb-6">
+  <div id="franchise-section" className="w-full flex flex-col items-center py-12 bg-white border-t border-b border-gray-100">
+    <h2 className="text-2xl md:text-3xl font-bold text-green-700 mb-3">Become an EVChamp Franchise Partner</h2>
+    <p className="max-w-2xl text-center text-gray-700 mb-6">
           Join the EV revolution and build a profitable business with India's leading AI & IoT-driven EV fleet management platform. 
           As an EVChamp franchisee, you get access to advanced technology, national brand support, and a rapidly growing market.
         </p>
@@ -124,6 +125,11 @@ function App() {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/refund" element={<RefundPolicy />} />
           <Route path="/franchise" element={<Franchise />} />
+          <Route path="/buy-used-ev" element={
+            <ProtectedRoute>
+              <BuyUsedEV />
+            </ProtectedRoute>
+          } />
         </Routes>
       </div>
     </Router>

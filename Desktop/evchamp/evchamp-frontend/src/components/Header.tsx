@@ -44,10 +44,10 @@ const Header: React.FC = () => {
             Testimonials
           </button>
           <button 
-            onClick={() => scrollToSection('overview')} 
+            onClick={() => scrollToSection('franchise-section')} 
             className="text-gray-600 hover:text-green-600 transition-colors cursor-pointer"
           >
-            Overview
+            Franchise
           </button>
         </nav>
         <div className="flex items-center space-x-4">
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
             href="/rent-ev"
             className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
           >
-            Rent EV
+            Lease EV
           </a>
           <a
             id="buy-plans-btn"
@@ -66,11 +66,11 @@ const Header: React.FC = () => {
             Buy Plans
           </a>
           <a
-            id="franchise-btn"
-            href="/franchise"
+            id="buy-used-ev-btn"
+            href="/buy-used-ev"
             className="cta-gradient text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all bg-gradient-to-r from-yellow-400 to-yellow-600"
           >
-            Franchise
+            Buy  Used EV's
           </a>
           
           {/* Account Management Button */}
